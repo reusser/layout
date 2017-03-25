@@ -22,7 +22,13 @@ Waterfall.prototype = {
       this.container.appendChild(column);
     }
   },
-  overWrite() {
+  overWrite(isRemove) {
+    if (isRemove) {
+      for (var i = 0; i < this.columns.length; i++) {
+        this.columns[i].remove();
+      }
+    }
+    
     this.initColumn(this.columnNum);
     for (let i = 0, length = this.boxes.length; i < length; i++) {
       let box = this.boxes[i];
@@ -67,7 +73,7 @@ Waterfall.prototype = {
 let waterfall = new Waterfall();
 
 window.onload = () => {
-  waterfall.overWrite();
+  waterfall.overWrite(true);
   initClickEvent();
   initDisplayEvent();
 };
@@ -88,12 +94,12 @@ const initClickEvent = () => {
     switch (event.target.id) {
       case 'add-column':
       waterfall.columnNum++;
-      waterfall.overWrite();
+      waterfall.overWrite(true);
       break;
 
       case 'del-column':
       waterfall.columnNum--;
-      waterfall.overWrite();
+      waterfall.overWrite(true);
       break;
 
       case 'add-box':
