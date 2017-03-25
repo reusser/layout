@@ -9,12 +9,17 @@ body {
   overflow: auto;
 }
 header {
+  margin-top: 20px;
   text-align: center;
 }
 .waterfall {
   overflow: auto;
   margin: 0 auto;
   width: 75%;
+}
+.waterfall img {
+  width: 100%;
+  cursor: pointer;
 }
 .waterfall-box {
   border: 1px solid #ccc;
@@ -38,6 +43,4 @@ header {
   float: left;
   padding: 8px;
 }
-.waterfall img {
-  width: 100%;
-}
+

@@ -6,6 +6,8 @@ const Waterfall = function (options) {
   this.container  = document.querySelector(containerSelector);
   this.boxes      = this.container ? Array.from(this.container.querySelectorAll('.waterfall-box')) : [];
   this.columns    = [];
+  this.size       = ['660x250', '300x400', '350x500', '200x320', '300x300'];
+  this.color      = [ 'E97452', '4C6EB4', '449F93', 'D25064', 'E59649' ];
   this.overWrite();
 };
 
@@ -20,13 +22,7 @@ Waterfall.prototype = {
       this.container.appendChild(column);
     }
   },
-  overWrite(isRemove) {
-    if (isRemove) {
-      for (let i = 0; i < this.columns.length; i++) {
-        this.columns[i].remove();
-      }
-    }
-
+  overWrite() {
     this.initColumn(this.columnNum);
     for (let i = 0, length = this.boxes.length; i < length; i++) {
       let box = this.boxes[i];
@@ -45,12 +41,79 @@ Waterfall.prototype = {
     return index;
   },
   addBox(box) {
-    let minHeightColumn = this.columns[this.getMinHeightIndex()];console.log(this.getMinHeightIndex())
+    let minHeightColumn = this.columns[this.getMinHeightIndex()];
     minHeightColumn.appendChild(box);
+  },
+  newBox() {
+  let index = parseInt(Math.random() * 5);
+  let box = document.createElement('div');
+  let img = document.createElement('img');
+  box.className = 'waterfall-box';
+  img.src = "http://placehold.it/" + this.size[index] + '/' + this.color[index] + '/fff';
+  box.appendChild(img);
+  let content = document.createElement('div');
+  content.className = 'content';
+  let title = document.createElement('h3');
+  title.appendChild(document.createTextNode('Title'));
+  content.appendChild(title);
+  let p = document.createElement('p');
+  p.appendChild(document.createTextNode('Content'));
+  content.appendChild(p);
+  box.appendChild(content);
+  return box;
   }
 };
 
 let waterfall = new Waterfall();
+
 window.onload = () => {
-  waterfall.overWrite(true);
+  waterfall.overWrite();
+  initClickEvent();
+  initDisplayEvent();
+};
+window.onscroll = () => {
+  let overHeight = (document.documentElement.scrollTop || document.body.scrollTop) + (document.documentElement.clientHeight || document.body.clientHeight);
+  let container  = waterfall.columns[waterfall.getMinHeightIndex()];
+  let containerHeight = container.offsetTop + container.offsetHeight;
+  if (containerHeight < overHeight) {
+    let box = waterfall.newBox();
+    waterfall.boxes.push(box);
+    waterfall.addBox(box);
+  }
+};
+
+const initClickEvent = () => {
+  let header = document.getElementById('button-box');
+  header.addEventListener('click', event => {
+    switch (event.target.id) {
+      case 'add-column':
+      waterfall.columnNum++;
+      waterfall.overWrite();
+      break;
+
+      case 'del-column':
+      waterfall.columnNum--;
+      waterfall.overWrite();
+      break;
+
+      case 'add-box':
+      waterfall.boxes.push(waterfall.newBox());
+      waterfall.addBox(waterfall.newBox());
+      break;
+    }
+  }, false);
+}
+
+const initDisplayEvent = () => {
+  document.querySelector('.waterfall').addEventListener('click', event => {
+    if (event.target.tagName.toLowerCase() === 'img') {
+      let display = document.querySelector('.display');
+      let img     = display.querySelector('img');
+      img.setAttribute('src', event.target.getAttribute('src'));
+      display.className = 'display';
+      display.onclick = () => {
+        display.className = 'display hidden';
+      }
+    }
+  }, false);
 }
