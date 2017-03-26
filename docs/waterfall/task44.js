@@ -24,7 +24,7 @@ Waterfall.prototype = {
   },
   overWrite(isRemove) {
     if (isRemove) {
-      for (var i = 0; i < this.columns.length; i++) {
+      for (let i = 0; i < this.columns.length; i++) {
         this.columns[i].remove();
       }
     }
