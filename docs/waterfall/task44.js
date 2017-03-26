@@ -51,22 +51,35 @@ Waterfall.prototype = {
     minHeightColumn.appendChild(box);
   },
   newBox() {
-  let index = parseInt(Math.random() * 5);
-  let box = document.createElement('div');
-  let img = document.createElement('img');
-  box.className = 'waterfall-box';
-  img.setAttribute('src', `https://placehold.it/${this.size[index]}/${this.color[index]}/fff`);
-  box.appendChild(img);
-  let content = document.createElement('div');
-  content.className = 'content';
-  let title = document.createElement('h3');
-  title.appendChild(document.createTextNode('Title'));
-  content.appendChild(title);
-  let p = document.createElement('p');
-  p.appendChild(document.createTextNode('Content'));
-  content.appendChild(p);
-  box.appendChild(content);
-  return box;
+    let index = parseInt(Math.random() * 5);
+    let box = document.createElement('div');
+    let img = document.createElement('img');
+    box.className = 'waterfall-box';
+    img.setAttribute('src', `https://placehold.it/${this.size[index]}/${this.color[index]}/fff`);
+    box.appendChild(img);
+    let content = document.createElement('div');
+    content.className = 'content';
+    let title = document.createElement('h3');
+    title.appendChild(document.createTextNode('Title'));
+    content.appendChild(title);
+    let p = document.createElement('p');
+    p.appendChild(document.createTextNode('Content'));
+    content.appendChild(p);
+    box.appendChild(content);
+    return box;
+  },
+  isHeightEnough() {
+    let overHeight = (document.documentElement.scrollTop || document.body.scrollTop) + (document.documentElement.clientHeight || document.body.clientHeight);
+    let container  = this.columns[this.getMinHeightIndex()];
+    let containerHeight = container.offsetTop + container.offsetHeight;
+    return containerHeight < overHeight;    
+  },
+  fill() {
+    while (this.isHeightEnough()) {
+      let box = this.newBox();
+      this.boxes.push(box);
+      this.addBox(box);      
+    }
   }
 };
 
@@ -78,10 +91,7 @@ window.onload = () => {
   initDisplayEvent();
 };
 window.onscroll = () => {
-  let overHeight = (document.documentElement.scrollTop || document.body.scrollTop) + (document.documentElement.clientHeight || document.body.clientHeight);
-  let container  = waterfall.columns[waterfall.getMinHeightIndex()];
-  let containerHeight = container.offsetTop + container.offsetHeight;
-  if (containerHeight < overHeight) {
+  if (waterfall.isHeightEnough()) {
     let box = waterfall.newBox();
     waterfall.boxes.push(box);
     waterfall.addBox(box);
@@ -95,6 +105,7 @@ const initClickEvent = () => {
       case 'add-column':
       waterfall.columnNum++;
       waterfall.overWrite(true);
+      waterfall.fill();
       break;
 
       case 'del-column':
