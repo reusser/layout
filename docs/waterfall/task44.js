@@ -87,6 +87,7 @@ let waterfall = new Waterfall();
 
 window.onload = () => {
   waterfall.overWrite(true);
+  waterfall.fill();
   initClickEvent();
   initDisplayEvent();
 };
