@@ -1,0 +1,25 @@
+body, h3, p {
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: Helvetica, Tahoma;
+  font-size: 14px;
+}
+.barrel {
+  margin: 0 auto;
+  width: 1000px;
+}
+.barrel-box {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+}
+.barrel-box .content {
+  position: absolute;
+  bottom: 0;
+  color: #fff;
+}
+.barrel-box img {
+  height: 100%;
+}
