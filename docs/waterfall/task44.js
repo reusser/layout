@@ -91,7 +91,10 @@ window.onload = () => {
   initDisplayEvent();
 };
 window.onscroll = () => {
-  if (waterfall.isHeightEnough()) {
+  let overHeight = (document.documentElement.scrollTop || document.body.scrollTop) + (document.documentElement.clientHeight || document.body.clientHeight);
+  let container  = waterfall.columns[waterfall.getMinHeightIndex()];
+  let containerHeight = container.offsetTop + container.offsetHeight;
+  if (containerHeight < overHeight) {
     let box = waterfall.newBox();
     waterfall.boxes.push(box);
     waterfall.addBox(box);
