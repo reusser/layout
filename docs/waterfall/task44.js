@@ -55,7 +55,7 @@ Waterfall.prototype = {
   let box = document.createElement('div');
   let img = document.createElement('img');
   box.className = 'waterfall-box';
-  img.src = "http://placehold.it/" + this.size[index] + '/' + this.color[index] + '/fff';
+  img.setAttribute('src', `https://placehold.it/${this.size[index]}/${this.color[index]}/fff`);
   box.appendChild(img);
   let content = document.createElement('div');
   content.className = 'content';
