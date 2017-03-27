@@ -1,0 +1,46 @@
+body, header {
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: Helvetica, Tahoma;
+  font-size: 14px;
+  padding: 0;
+  overflow: auto;
+}
+header {
+  margin-top: 20px;
+  text-align: center;
+}
+.waterfall {
+  overflow: auto;
+  margin: 0 auto;
+  width: 75%;
+}
+.waterfall img {
+  width: 100%;
+  cursor: pointer;
+}
+.waterfall-box {
+  border: 1px solid #ccc;
+  margin-top: 16px;
+}
+.display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .7);
+}
+.hidden {
+  display: none;
+}
+.waterfall-column {
+  box-sizing: border-box;
+  float: left;
+  padding: 8px;
+}
+
