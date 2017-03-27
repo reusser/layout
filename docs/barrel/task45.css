@@ -23,3 +23,7 @@ body {
 .barrel-box img {
   height: 100%;
 }
+.barrel-row {
+  overflow: hidden;
+  white-space: nowrap;
+}
